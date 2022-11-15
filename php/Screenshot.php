@@ -1,0 +1,80 @@
+<?php
+include_once __DIR__ . '/../vendor/autoload.php';
+
+use Google\Exception;
+use Google\Service\Drive;
+
+function requestScreenshot($url, $id, $name){
+    try{
+        require_once("private/API_KEYS.php");
+    
+        $hash = md5($url.$SCREENSHOT_API_SECRET_PHRASE);  //As required in the documentation, the hash is a combined md5 hash of the url and the secret phrase.
+        $src = "https://api.screenshotmachine.com?key=$SCREENSHOT_API_KEY&url=$url&dimension=1920x1080&format=jpg&hash=$hash&delay=200";
+        $name = str_replace(" ","-",$name); //Whitespaces are replaced for dashes to avoid errors.
+        $filename = $id."_".$name.".jpg"; //Filename is id_name.jpg
+        $img = imagecreatefromstring(file_get_contents($src)); //The screenshot is imported and stored in memory
+        imagejpeg($img, "../img/$filename"); //Image is saved in local folder /img
+        imagedestroy($img); //Image destroy for memory saving.
+    }
+    catch(Exception $e){
+        echo 'Error. Screenshot request failed: ' .$e->getMessage();
+    }
+}
+
+function uploadImgToDrive($filename, $parentFolder){
+    try{
+        require_once("private/API_KEYS.php");
+
+        $client = new Google_Client();
+        // Get your credentials from the console
+        $client->setClientId($GOOGLE_CLIENT_ID);
+        $client->setClientSecret($GOOGLE_SECRET_KEY);
+        $client->setRedirectUri('http://localhost:8000/screenshot_generator/php/Screenshot.php'); //Redirect after Google Authentication
+        $client->setScopes(array('https://www.googleapis.com/auth/drive.file')); // Permissions. Only file manipulation on Drive.
+
+        session_start();
+
+        if (isset($_GET['code']) || (isset($_SESSION['accessToken']) && $_SESSION['accessToken'])) {
+            if (isset($_GET['code'])) {
+                $client->fetchAccessTokenWithAuthCode($_GET['code']); //Exchange the authorization code for an access token
+                $_SESSION['accessToken'] = $client->getAccessToken(); //Store the access token in the $_SESSION array
+            } else
+                $client->setAccessToken($_SESSION['accessToken']);
+
+            $service = new Google\Service\Drive($client); //Contruct the Drive Service
+
+            //Insert a file
+            $file = new Drive\DriveFile();
+            $file->setName($filename);
+            $file->setDescription("A screenshot of ".substr($filename,strpos($filename,".")),"'s landing page.");
+            $file->setMimeType('image/jpeg');
+            $file->setParents(array($parentFolder)); //The desired drive target folder
+
+            $data = file_get_contents("../img/$filename");
+
+            $createdFile = $service->files->create($file, array(
+                'data' => $data,
+                'mimeType' => 'image/jpeg',
+                'uploadType' => 'multipart'
+                ));
+
+            print_r($createdFile);
+
+        } else {
+            $authUrl = $client->createAuthUrl();
+            header('Location: ' . $authUrl);
+            exit();
+        }
+    }
+    catch(Exception $e) {
+        echo 'Error. Image upload to Drive failed: ' .$e->getMessage();
+    }
+
+    
+
+    
+}
+
+
+/* requestScreenshot("https://www.propertypartner.co/",2,"Property Partner"); */
+uploadImgToDrive("2_Property Partner.jpg","10ze2oFvaMFhnPGM7e53Q8vWumel04nxi");
