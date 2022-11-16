@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Automatic Screenshot Generator</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="js/script.js" defer></script>
 </head>
 <body>
     <header>
         <h1>Automatic Screenshot Generator</h1>
         <p>When you press a button, we take an automatic screenshot of the webpage and upload it directly to <a href="https://drive.google.com/drive/folders/10ze2oFvaMFhnPGM7e53Q8vWumel04nxi?usp=sharing">this Google Drive folder.</a></p>
-        <p>You will be asked to login via Google.</p>
+        <p><b>Please, first authenticate with Google</b></p>
+        <button id="login">
+        Login with Google
+        </button>
     </header>
     <main>
         <section>
@@ -37,7 +41,7 @@
     <li>
         <p></p>
         <a href=""></a>
-            <a class="buttonLink" href="" target="_blank" rel="noopener noreferrer"><button type="button">Screenshot</button></a>
+            <button type="button" disabled>Screenshot</button>
         <img src="" alt="">
     </li>
 </template>

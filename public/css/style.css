@@ -1,6 +1,11 @@
 body{
     font-family: Monospace;
 }
+header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 header>h1{
     font-size: 50px;
     text-align: center;
@@ -29,6 +34,10 @@ li{
     gap: 10px;
 
 }
+i{
+    display: none;
+}
+
 li p{
     margin:0
 }
@@ -36,3 +45,25 @@ li img{
     width: 500px;
     max-width: 100%;
 }
+button{
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 24px; /* Some padding */
+    font-size: 16px; /* Set a font-size */
+    background-color: darkslategrey;
+}
+
+/* Animations */
+    .buttonload {
+        background-color: darkslategrey; /* Green background */
+        border: none; /* Remove borders */
+        color: white; /* White text */
+        padding: 12px 24px; /* Some padding */
+        font-size: 16px; /* Set a font-size */
+    }
+    
+    /* Add a right margin to each icon */
+    .fa {
+        margin-left: -12px;
+        margin-right: 8px;
+    }
