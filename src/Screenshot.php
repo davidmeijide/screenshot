@@ -60,7 +60,7 @@ function uploadImgToDrive($filename, $parentFolder){
                 'uploadType' => 'multipart'
                 ));
 
-            return($createdFile->id);
+            echo print_r($createdFile);
 
         } else { 
             // Redirects to Google authorization url if auth code or access token are not set. Redirection is done to get the auth code.
@@ -73,5 +73,6 @@ function uploadImgToDrive($filename, $parentFolder){
         echo 'Error. Image upload to Drive failed: ' .$e->getMessage();
     }
 }
+/* uploadImgToDrive('1_iFunded.jpg',"10ze2oFvaMFhnPGM7e53Q8vWumel04nxi"); */
 
 
