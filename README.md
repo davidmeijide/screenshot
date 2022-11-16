@@ -1,20 +1,10 @@
-#Instalation - <a src="https://github.com/googleapis/google-api-php-client">Google APIs Client Library for PHP</a>
-In order to upload files to Google Drive from our server, we need to install this library.
-I installed it using Composer:
-composer require google/apiclient:^2.12.1
-Make sure to include the autoloader in your php file:
-require_once '/path/to/your-project/vendor/autoload.php';
-In compose.json, cleanup and only use Drive
-`{
-    "require": {
-        "google/apiclient": "^2.12.1"
-    },
-    "scripts": {
-        "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
-    },
-    "extra": {
-        "google/apiclient-services": [
-            "Drive",
-        ]
-    }
-}`
+# Automatic screenshot generator
+
+This project uses [https://www.screenshotmachine.com API](https://www.screenshotmachine.com/website-screenshot-api.php) for taking screenshots from a URL.
+
+Then, the image is uploaded [this Google Drive folder](https://drive.google.com/drive/folders/10ze2oFvaMFhnPGM7e53Q8vWumel04nxi?usp=sharing).
+
+The user can request uploads from the frontend **after Google Authentication**.
+
+The stack used was PHP for the backend and Javascript for the frontend.
+
