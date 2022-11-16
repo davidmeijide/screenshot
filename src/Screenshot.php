@@ -60,7 +60,7 @@ function uploadImgToDrive($filename, $parentFolder){
                 'uploadType' => 'multipart'
                 ));
 
-            echo print_r($createdFile);
+            return "Successful upload! You can now close this window. File id: $createdFile->id";
 
         } else { 
             // Redirects to Google authorization url if auth code or access token are not set. Redirection is done to get the auth code.

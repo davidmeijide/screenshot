@@ -22,23 +22,21 @@ function renderWebsites(json){
     const fragment = document.createDocumentFragment()
     json.forEach((website,index) => {
         const clone = template.cloneNode(true)
-        const form = clone.querySelector('form')
         const p = clone.querySelector('p')
         const a = clone.querySelector('a')
         const img = clone.querySelector('img')
-        const input = clone.querySelector('input')
+        const button_link = clone.querySelector('.buttonLink')
         const button = clone.querySelector('button')
         button.dataset.id = index+1
-        input.value = index+1
-        form.action = `http://localhost:8000/screenshot_generator/Controller/Controller.php`
+        button_link.href = `http://localhost:8000/screenshot_generator/Controller/Controller.php?id=${index+1}`
         p.textContent = website.name
         a.href = website.website
         a.textContent = website.website
         img.src = `img/${website.id}_${website.name.replaceAll(" ","-")}.jpg`
         button.addEventListener('click',e=>{
-            takeScreenshot(button.dataset.id)
+            e.preventDefault()
+            window.open(button_link.href)
         })
-
         fragment.appendChild(clone)
     })
     ul.appendChild(fragment)

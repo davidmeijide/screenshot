@@ -9,6 +9,8 @@ if(isset($_POST["getWebsites"])){
 if(isset($_GET['id'])){
     $jsonData = json_decode(file_get_contents('../websites.json'),true)[$_GET['id']-1];
     $filename = requestScreenshot($jsonData['website'],$jsonData['id'],$jsonData['name']);
-    header("Location: ../src/uploadImgToDrive.php?filename=$filename");
+    echo uploadImgToDrive($filename,"10ze2oFvaMFhnPGM7e53Q8vWumel04nxi");
+    echo "<script>window.close()</script>";
+    //header("Location: ../src/uploadImgToDrive.php?filename=$filename");
 }
 

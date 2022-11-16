@@ -4,7 +4,10 @@ body{
 header>h1{
     font-size: 50px;
     text-align: center;
-
+}
+header p{
+    text-align: center;
+    font-size: 15px;
 }
 section ul{
     font-size: 20px;
